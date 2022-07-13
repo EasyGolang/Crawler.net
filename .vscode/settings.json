@@ -5,6 +5,7 @@
     "bson",
     "fasthttp",
     "feishu",
+    "Genshin",
     "gofiber",
     "hoverable",
     "jsoniter",

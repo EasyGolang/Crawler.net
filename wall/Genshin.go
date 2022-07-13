@@ -2,11 +2,11 @@ package wall
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"os"
 	"strings"
 
+	"Crawler.net/server/global"
 	"github.com/EasyGolang/goTools/mPath"
 	"github.com/EasyGolang/goTools/mStr"
 	"github.com/gocolly/colly"
@@ -54,7 +54,7 @@ func GetImgUrl(Url string, callBack func(string)) {
 }
 
 func SaveFile(Url string) {
-	fmt.Println("新建下载:", Url)
+	global.Log.Println("新建下载:", Url)
 	c := colly.NewCollector()
 	c.OnResponse(func(r *colly.Response) {
 		nameArr := strings.Split(r.Request.URL.String(), "/")
@@ -65,14 +65,14 @@ func SaveFile(Url string) {
 		SaveFile := SavePath + "/" + fileName
 		f, err := os.Create(SaveFile)
 		if err != nil {
-			fmt.Println("保存失败:" + SaveFile)
+			global.Log.Println("保存失败:", SaveFile)
 		}
 		io.Copy(f, bytes.NewReader(r.Body))
-		fmt.Println("保存成功:" + SaveFile)
+		global.Log.Println("保存成功:", SaveFile)
 	})
 	c.OnError(func(response *colly.Response, err error) {
 		if err != nil {
-			fmt.Println("请求错误", err)
+			global.Log.Println("请求错误:", err)
 		}
 	})
 	c.Visit(Url)
