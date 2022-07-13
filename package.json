@@ -2,6 +2,7 @@
   "name": "crawler-net",
   "version": "0.0.1",
   "private": true,
+  "Port": 10056,
   "scripts": {
     "serve": "./_shell/serve_start.sh",
     "vue:build": "vite build",
