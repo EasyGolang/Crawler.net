@@ -21,7 +21,7 @@ var WallUrl = "https://wall.alphacoders.com/by_sub_category.php?id=333944&name=%
 var SavePath = "./cache"
 
 // 下载页数
-var PageSize = 1
+var PageSize = 20
 
 func Genshin() {
 	isSavePath := mPath.Exists(SavePath)
@@ -57,7 +57,6 @@ func SaveFile(Url string) {
 	fmt.Println("新建下载:", Url)
 	c := colly.NewCollector()
 	c.OnResponse(func(r *colly.Response) {
-		fmt.Println("获取内容", r.Request.URL.String())
 		nameArr := strings.Split(r.Request.URL.String(), "/")
 		if len(nameArr) < 2 {
 			return
