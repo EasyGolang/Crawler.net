@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"Crawler.net/server/global"
+	"github.com/EasyGolang/goTools/mJson"
 	"github.com/EasyGolang/goTools/mPath"
 	"github.com/EasyGolang/goTools/mStr"
 	"github.com/gocolly/colly"
@@ -23,6 +24,8 @@ var SavePath = "./www/wall"
 // 下载页数
 var PageSize = 20
 
+var ErrDownload = []string{}
+
 func Genshin() {
 	isSavePath := mPath.Exists(SavePath)
 	if !isSavePath {
@@ -36,8 +39,16 @@ func Genshin() {
 		})
 	}
 	for _, v := range imgSrc {
-		SaveFile(v)
+		SaveFile(v, func(i int) {
+			if i < 0 {
+				ErrDownload = append(ErrDownload, v)
+			}
+		})
 	}
+
+	errJsonStr := mJson.ToJson(ErrDownload)
+
+	global.Log.Println(mJson.JsonFormat(errJsonStr))
 }
 
 func GetImgUrl(Url string, callBack func(string)) {
@@ -53,7 +64,7 @@ func GetImgUrl(Url string, callBack func(string)) {
 	c.Visit(Url)
 }
 
-func SaveFile(Url string) {
+func SaveFile(Url string, callBack func(int)) {
 	global.Log.Println("新建下载:", Url)
 	c := colly.NewCollector()
 	c.OnResponse(func(r *colly.Response) {
@@ -69,10 +80,12 @@ func SaveFile(Url string) {
 		}
 		io.Copy(f, bytes.NewReader(r.Body))
 		global.Log.Println("保存成功:", SaveFile)
+		callBack(1)
 	})
-	c.OnError(func(response *colly.Response, err error) {
+	c.OnError(func(r *colly.Response, err error) {
 		if err != nil {
 			global.Log.Println("请求错误:", err)
+			callBack(-1)
 		}
 	})
 	c.Visit(Url)
