@@ -3,6 +3,19 @@
 source "./_shell/init.sh"
 #############
 
+echo " =========== 整理文件到 www  =========== "
+rm -rf ${staticPath}
+mv ${outPutPath} ${staticPath}
+
+echo " =========== 写入文件 =========== "
+sudo cat >${staticPath}"/index.go" <<END
+package www
+
+import "embed"
+
+//go:embed *
+var Static embed.FS
+END
 
 echo " =========== go build  =========== "
 

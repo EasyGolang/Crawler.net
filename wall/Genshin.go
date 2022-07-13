@@ -18,7 +18,7 @@ import (
 var WallUrl = "https://wall.alphacoders.com/by_sub_category.php?id=333944&name=%E5%8E%9F%E7%A5%9E+%E5%A3%81%E7%BA%B8&lang=Chinese"
 
 // 保存目录
-var SavePath = "./cache"
+var SavePath = "./www/wall"
 
 // 下载页数
 var PageSize = 20
@@ -36,7 +36,7 @@ func Genshin() {
 		})
 	}
 	for _, v := range imgSrc {
-		SaveFile(v)
+		go SaveFile(v)
 	}
 }
 
