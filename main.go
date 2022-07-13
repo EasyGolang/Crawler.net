@@ -18,8 +18,9 @@ func main() {
 
 	// 初始化系统参数
 	global.Start()
+
 	// 下载 原神 壁纸
-	wall.Genshin()
+	go wall.Genshin()
 
 	// 启动 http 监听服务
 	router.Start()
