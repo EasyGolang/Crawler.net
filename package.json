@@ -4,9 +4,8 @@
   "private": true,
   "Port": 10056,
   "scripts": {
+    "build": "./_shell/build.sh",
     "serve": "./_shell/serve_start.sh",
-    "vue:build": "vite build",
-    "vue:check": "vue-tsc --noEmit",
     "git": "./_shell/gitSet.sh",
     "sync": "./_shell/sync_git.sh",
     "deploy": "./_shell/deploy.sh"
