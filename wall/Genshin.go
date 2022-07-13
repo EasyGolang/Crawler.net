@@ -7,20 +7,31 @@ import (
 	"os"
 	"strings"
 
+	"github.com/EasyGolang/goTools/mPath"
 	"github.com/EasyGolang/goTools/mStr"
 	"github.com/gocolly/colly"
 )
 
 // 原神 壁纸下载器
+
 // wall 页面地址
 var WallUrl = "https://wall.alphacoders.com/by_sub_category.php?id=333944&name=%E5%8E%9F%E7%A5%9E+%E5%A3%81%E7%BA%B8&lang=Chinese"
 
-var SavePath = "./cache/"
+// 保存目录
+var SavePath = "./cache"
+
+// 下载页数
+var PageSize = 1
 
 func Genshin() {
+	isSavePath := mPath.Exists(SavePath)
+	if !isSavePath {
+		os.MkdirAll(SavePath, 0o777)
+	}
+
 	var imgSrc []string
 
-	for i := 1; i < 20; i++ {
+	for i := 0; i < PageSize; i++ {
 		Url := WallUrl + "&quickload=7500+&page=" + mStr.ToStr(i)
 		GetImgUrl(Url, func(s string) {
 			imgSrc = append(imgSrc, s)
@@ -52,7 +63,9 @@ func SaveFile(Url string) {
 			return
 		}
 		fileName := nameArr[len(nameArr)-1]
-		SaveFile := SavePath + fileName
+		SaveFile := SavePath + "/" + fileName
+
+		fmt.Println("下载第一张壁纸:", r.Request.URL.String())
 
 		f, err := os.Create(SaveFile)
 		if err != nil {
