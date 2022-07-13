@@ -28,16 +28,13 @@ func Genshin() {
 	if !isSavePath {
 		os.MkdirAll(SavePath, 0o777)
 	}
-
 	var imgSrc []string
-
 	for i := 0; i < PageSize; i++ {
 		Url := WallUrl + "&quickload=7500+&page=" + mStr.ToStr(i)
 		GetImgUrl(Url, func(s string) {
 			imgSrc = append(imgSrc, s)
 		})
 	}
-
 	DownLoadImg(imgSrc)
 }
 
@@ -51,22 +48,20 @@ func GetImgUrl(Url string, callBack func(string)) {
 			callBack(src)
 		}
 	})
-
 	c.Visit(Url)
 }
 
 func SaveFile(Url string) {
+	fmt.Println("新建下载:", Url)
 	c := colly.NewCollector()
 	c.OnResponse(func(r *colly.Response) {
+		fmt.Println("获取内容", r.Request.URL.String())
 		nameArr := strings.Split(r.Request.URL.String(), "/")
 		if len(nameArr) < 2 {
 			return
 		}
 		fileName := nameArr[len(nameArr)-1]
 		SaveFile := SavePath + "/" + fileName
-
-		fmt.Println("下载第一张壁纸:", r.Request.URL.String())
-
 		f, err := os.Create(SaveFile)
 		if err != nil {
 			fmt.Println("保存失败:" + SaveFile)
@@ -74,7 +69,6 @@ func SaveFile(Url string) {
 		io.Copy(f, bytes.NewReader(r.Body))
 		fmt.Println("保存成功:" + SaveFile)
 	})
-
 	c.Visit(Url)
 }
 
