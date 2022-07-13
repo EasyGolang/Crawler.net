@@ -74,6 +74,7 @@ func SaveFile(Url string) {
 
 func DownLoadImg(srcArr []string) {
 	for _, v := range srcArr {
-		SaveFile(v)
+		fmt.Println(v)
+		// SaveFile(v)
 	}
 }
