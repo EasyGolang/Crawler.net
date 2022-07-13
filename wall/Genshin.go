@@ -11,13 +11,13 @@ import (
 	"github.com/gocolly/colly"
 )
 
-// 原神壁纸下载器
+// 原神 壁纸下载器
 // wall 页面地址
 var WallUrl = "https://wall.alphacoders.com/by_sub_category.php?id=333944&name=%E5%8E%9F%E7%A5%9E+%E5%A3%81%E7%BA%B8&lang=Chinese"
 
 var SavePath = "./cache/"
 
-func Start() {
+func Genshin() {
 	var imgSrc []string
 
 	for i := 1; i < 20; i++ {
