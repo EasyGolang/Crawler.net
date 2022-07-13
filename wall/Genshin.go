@@ -10,7 +10,6 @@ import (
 	"github.com/EasyGolang/goTools/mPath"
 	"github.com/EasyGolang/goTools/mStr"
 	"github.com/gocolly/colly"
-	"github.com/gocolly/colly/debug"
 )
 
 // 原神 壁纸下载器
@@ -56,7 +55,7 @@ func GetImgUrl(Url string, callBack func(string)) {
 
 func SaveFile(Url string) {
 	fmt.Println("新建下载:", Url)
-	c := colly.NewCollector(colly.Debugger(&debug.LogDebugger{}))
+	c := colly.NewCollector()
 	c.OnResponse(func(r *colly.Response) {
 		fmt.Println("获取内容", r.Request.URL.String())
 		nameArr := strings.Split(r.Request.URL.String(), "/")
@@ -73,7 +72,9 @@ func SaveFile(Url string) {
 		fmt.Println("保存成功:" + SaveFile)
 	})
 	c.OnError(func(response *colly.Response, err error) {
-		fmt.Println(err)
+		if err != nil {
+			fmt.Println("请求错误", err)
+		}
 	})
 	c.Visit(Url)
 }
