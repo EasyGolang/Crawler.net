@@ -36,7 +36,7 @@ func Genshin() {
 		})
 	}
 	for _, v := range imgSrc {
-		go SaveFile(v)
+		SaveFile(v)
 	}
 }
 
