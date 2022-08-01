@@ -7,7 +7,7 @@ import (
 	"Crawler.net/server/global/dbType"
 	"Crawler.net/server/router/result"
 	"github.com/EasyGolang/goTools/mEncrypt"
-	"github.com/EasyGolang/goTools/mRes/mFiber"
+	"github.com/EasyGolang/goTools/mFiber"
 	"github.com/gofiber/fiber/v2"
 )
 

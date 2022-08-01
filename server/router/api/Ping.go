@@ -4,7 +4,7 @@ import (
 	"Crawler.net/server/global/config"
 	"Crawler.net/server/router/middle"
 	"Crawler.net/server/router/result"
-	"github.com/EasyGolang/goTools/mRes/mFiber"
+	"github.com/EasyGolang/goTools/mFiber"
 	"github.com/EasyGolang/goTools/mStr"
 	"github.com/gofiber/fiber/v2"
 )
