@@ -3,7 +3,7 @@ module Crawler.net
 go 1.18
 
 require (
-	github.com/EasyGolang/goTools v0.13.8
+	github.com/EasyGolang/goTools v0.14.6
 	github.com/gocolly/colly v1.2.0
 	github.com/gofiber/fiber/v2 v2.34.0
 	github.com/json-iterator/go v1.1.12
